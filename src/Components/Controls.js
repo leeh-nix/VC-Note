@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
 import { ReactComponent as VolumeOn } from "../Assets/volume.svg";
 import { ReactComponent as VolumeOff } from "../Assets/volumeoff.svg";
 import { ReactComponent as HangUp } from "../Assets/hangup.svg";
@@ -9,8 +11,6 @@ import { ReactComponent as VideoOff } from "../Assets/videooff.svg";
 import { ReactComponent as ScreenOn } from "../Assets/screenon.svg";
 import { ReactComponent as ScreenOff } from "../Assets/screenoff.svg";
 
-import IconButton from "@mui/material/IconButton";
-
 export default function Controls() {
   const [volume, setVolume] = useState(true);
   const [mic, setMic] = useState(true);
@@ -18,22 +18,32 @@ export default function Controls() {
   const [screenshare, setScreenshare] = useState(false);
 
   return (
-    <div>
-      <IconButton onClick={() => setVolume(!volume)} sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px" }}>
-        {volume ? <VolumeOn /> : <VolumeOff />}
-      </IconButton>
-      <IconButton onClick={() => setMic(!mic)} sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px" }}>
-        {mic ? <MicOn /> : <MicOff />}
-      </IconButton>
-      <IconButton sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px" }}>
-        <HangUp />
-      </IconButton>
-      <IconButton onClick={() => setVideo(!video)} sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px" }}>
-        {video ? <VideoOn /> : <VideoOff />}
-      </IconButton>
-      <IconButton onClick={() => setScreenshare(!screenshare)} sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px" }}>
-        {screenshare ? <ScreenOff /> : <ScreenOn />}
-      </IconButton>
-    </div>
+    <Grid container spacing={2} sx={{ textAlign: "center", alignItems: "center" }}>
+      <Grid item xs>
+        <IconButton onClick={() => setVolume(!volume)} sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px" }}>
+          {volume ? <VolumeOn /> : <VolumeOff />}
+        </IconButton>
+      </Grid>
+      <Grid item xs>
+        <IconButton onClick={() => setMic(!mic)} sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px" }}>
+          {mic ? <MicOn /> : <MicOff />}
+        </IconButton>
+      </Grid>
+      <Grid item xs>
+        <IconButton sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px", width: "132px" }}>
+          <HangUp />
+        </IconButton>
+      </Grid>
+      <Grid item xs>
+        <IconButton onClick={() => setVideo(!video)} sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px" }}>
+          {video ? <VideoOn /> : <VideoOff />}
+        </IconButton>
+      </Grid>
+      <Grid item xs>
+        <IconButton onClick={() => setScreenshare(!screenshare)} sx={{ backgroundColor: "#2D2D2D", borderRadius: "20px" }}>
+          {screenshare ? <ScreenOff /> : <ScreenOn />}
+        </IconButton>
+      </Grid>
+    </Grid>
   );
 }
