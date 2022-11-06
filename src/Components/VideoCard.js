@@ -6,23 +6,13 @@ import { CardActionArea } from "@mui/material";
 
 export default function VideoCard(props) {
   return (
-    // <div
-    //   style={{
-    //     backgroundColor: "red",
-    //     display: "block",
-    //     width: 1000,
-    //     height: 200,
-    //     borderRadius: 20,
-    //   }}
-    // />
-
-    <Card sx={{ minWidth: 300, width: "100%" }}>
+    <Card minWidth={300}>
       <CardActionArea>
         <CardMedia
           component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
+          height="50%"
+          image={props.src}
+          alt="People"
         />
         <CardContent>
           <Typography
@@ -31,7 +21,7 @@ export default function VideoCard(props) {
             component="div"
             textAlign="center"
           >
-            Lizard
+            {props.name}
           </Typography>
         </CardContent>
       </CardActionArea>
