@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { Link as MUIlink } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import Divider from "@mui/material/Divider";
 import ConferencingImage from "../Assets/conferencing.png";
+import { logout } from "../firebase";
 
 export default function Landing() {
+  const sessionToken = sessionStorage.getItem("Auth-Token");
+  // console.log(sessionToken === null ? false : true)
+  const [isLoggedIn, setIsLoggedIn] = useState(!sessionToken ? false : true);
+
+  const handleSignOut = () => {
+    console.log("Sign Out");
+    sessionStorage.removeItem("Auth-Token");
+    setIsLoggedIn(false);
+    logout();
+  };
+
   return (
     <Box sx={{ minHeight: "100vh" }}>
       <Box sx={{ padding: "1.375rem 1rem", display: "flex", alignContent: "space-between" }}>
@@ -17,11 +30,24 @@ export default function Landing() {
           </MUIlink>
         </Typography>
         <Box sx={{ display: "flex", gap: "3rem" }}>
-          <Button sx={{ fontSize: "1.25rem", textTransform: "none" }}>
+          {!isLoggedIn ? (
+            <Button sx={{ fontSize: "1.25rem", textTransform: "none" }}>
+              <MUIlink component={Link} to="/login" sx={{ marginLeft: "0.3125rem", color: "#000" }} underline="none">
+                Log In
+              </MUIlink>
+            </Button>
+          ) : (
+            <Button sx={{ fontSize: "1.25rem", textTransform: "none", color: "#000" }} onClick={handleSignOut}>
+              Sign Out
+            </Button>
+          )}
+
+          {/* <Button sx={{ fontSize: "1.25rem", textTransform: "none" }}>
             <MUIlink component={Link} to="/login" sx={{ marginLeft: "0.3125rem", color: "#000" }} underline="none">
               Log In
             </MUIlink>
-          </Button>
+          </Button> */}
+
           <Button variant="contained" sx={{ fontSize: "1.25rem", textTransform: "none" }}>
             Start a meeting
           </Button>
@@ -45,6 +71,13 @@ export default function Landing() {
               </Button>
             </Box>
           </Box>
+          <Divider sx={{ marginTop: "2.25rem" }} />
+          <Typography variant="body1" sx={{ fontSize: "1rem", color: "#374151", marginTop: "1.5rem" }}>
+            Don't have an account?
+            <MUIlink component={Link} to="/signup" sx={{ marginLeft: "0.3125rem", color: "#5048E5" }} underline="hover">
+              Get Started Now
+            </MUIlink>
+          </Typography>
         </Box>
         <Box sx={{ width: "40%" }}>
           <img src={ConferencingImage} alt="Conferencing" style={{ backgroundSize: "contain", width: "100%" }} />

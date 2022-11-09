@@ -18,7 +18,7 @@ const signInWithGoogle = async () => {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
-    const docs = await getDocs();
+    const docs = await getDocs(q);
     if (docs.docs.length === 0) {
       await addDoc(collection(db, "users"), {
         uid: user.uid,
@@ -28,7 +28,6 @@ const signInWithGoogle = async () => {
       });
     }
   } catch (error) {
-    console.log(error);
     alert(error.message);
   }
 };
@@ -46,19 +45,21 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+    const token = await user.getIdToken;
     await addDoc(collection(db, "users"), {
       uid: user.uid,
       name,
       authProvider: "local",
       email,
     });
+    return token;
   } catch (error) {
     console.log(error);
     alert(error.message);
   }
 };
 
-const sendPasswordResetEmail = async (email) => {
+const sendPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
   } catch (error) {
@@ -71,4 +72,4 @@ const logout = () => {
   signOut(auth);
 };
 
-export { auth, db, signInWithGoogle, logInWithEmailAndPassword, registerWithEmailAndPassword, sendPasswordResetEmail, logout };
+export { auth, db, signInWithGoogle, logInWithEmailAndPassword, registerWithEmailAndPassword, sendPasswordReset, logout };
