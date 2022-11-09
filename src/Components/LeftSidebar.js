@@ -22,7 +22,7 @@ export default function LeftSidebar() {
     <Grid
       container
       minWidth="64px"
-      bgcolor="darkgray"
+      bgcolor="#141414"
       justifyContent="center"
       alignContent="center"
       sx={{ flexDirection: "column" }}
@@ -35,7 +35,7 @@ export default function LeftSidebar() {
         alignContent="flex-end"
         sx={{ flexDirection: "column" }}
       >
-        <Tooltip title={"Home"}>
+        <Tooltip title={"Home"} arrow placement="right">
           <IconButton onClick={() => setHome(!Home)}>
             {Home ? <HomeOn /> : <HomeOff />}
           </IconButton>
@@ -47,17 +47,17 @@ export default function LeftSidebar() {
         </Tooltip>
         <Tooltip title={"Message"}>
           <IconButton onClick={() => setMessage(!Message)}>
-          {Message ? <MessageOn /> : <MessageOff />}
+            {Message ? <MessageOn /> : <MessageOff />}
           </IconButton>
         </Tooltip>
         <Tooltip title={"Member"}>
           <IconButton onClick={() => setMember(!Member)}>
-          {Member ? <MemberOn /> : <MemberOff />}
+            {Member ? <MemberOn /> : <MemberOff />}
           </IconButton>
         </Tooltip>
         <Tooltip title={"Settings"}>
           <IconButton onClick={() => setSettings(!Settings)}>
-          {Settings ? <SettingsOn /> : <SettingsOff />}
+            {Settings ? <SettingsOn /> : <SettingsOff />}
           </IconButton>
         </Tooltip>
       </Grid>

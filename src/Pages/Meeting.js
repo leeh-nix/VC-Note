@@ -2,14 +2,39 @@ import React from "react";
 import LeftSidebar from "../Components/LeftSidebar";
 import VideoGrid from "../Components/VideoGrid";
 import PermanentDrawerRight from "../Components/PermanentDrawerRight";
-// import RightSidebar from "../Components/RightSidebar";
+import Controls from "../Components/Controls";
+
 const Meeting = () => {
   return (
-    <div style={{ display: "flex", height: "100%", minHeight: "100vh" }}>
+    <div
+      style={{
+        display: "flex",
+        height: "100vh",
+        backgroundColor: "#141414",
+      }}
+    >
       <LeftSidebar />
-      <VideoGrid />
+      <div
+        style={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          height: "100vh",
+        }}
+      >
+        <VideoGrid />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ width: "580px" }}>
+            <Controls />
+          </div>
+        </div>
+      </div>
       <PermanentDrawerRight />
-      {/* <RightSidebar/> */}
     </div>
   );
 };

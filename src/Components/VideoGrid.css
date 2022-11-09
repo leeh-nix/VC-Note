@@ -1,0 +1,49 @@
+.video-card{
+    background-color: darkblue;
+    /* overflow: hidden; why does this work */
+    /* max-height: 90px; */
+    /* border: 10px solid black; */
+
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+/* .video-card img{
+    height: 100%;
+    width: 100%;
+    background-color: blue;
+} */
+
+.v1{
+    width: 100%;
+    height: 50%;
+}
+.v2{
+    width: calc(50% - 10px);
+    height: calc(50% - 10px);
+}
+.v3{
+    width: calc(50% - 10px);
+    height: calc(50% - 10px);
+}
+.v4{
+    width: calc(50% - 10px);
+    height: calc(50% - 10px);
+}
+.v5{
+    width: calc(50% - 10px);
+    height: calc(50% - 10px);
+}
+.v6{
+    width: calc(50% - 10px);
+    height: calc(50% - 10px);
+}
+.v7{
+    width: calc(50% - 10px);
+    height: calc(50% - 10px);
+}
+.v8{
+    width: calc(50% - 10px);
+    height: calc(50% - 10px);
+}
