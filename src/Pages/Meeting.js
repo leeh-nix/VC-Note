@@ -1,6 +1,7 @@
 import React from "react";
 import LeftSidebar from "../Components/LeftSidebar/LeftSidebar";
 import VideoGrid from "../Components/VideoGrid";
+import RightSidebar from "../Components/RightSidebar";
 
 const Meeting = () => {
   return (
