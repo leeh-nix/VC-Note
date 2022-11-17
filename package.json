@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.14",
     "@mui/material": "^5.10.14",
     "@videosdk.live/react-sdk": "^0.1.53",
@@ -18,7 +20,8 @@
     "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.2.0",
     "react-player": "^2.11.0",
-    "react-responsive": "^9.0.0"
+    "react-responsive": "^9.0.0",
+    "react-router-dom": "^6.4.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",
