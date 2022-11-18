@@ -6,6 +6,7 @@ import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import VideocamIcon from "@mui/icons-material/Videocam";
+import SettingDialogBox from "../components/SettingDialogBox";
 
 const Video = styled("video")(({ theme }) => ({
   borderRadius: "10px",
@@ -52,7 +53,9 @@ export default function JoiningPage({
   const [videoTrack, setVideoTrack] = useState(null);
   const [dlgMuted, setDlgMuted] = useState(false);
   const [dlgDevices, setDlgDevices] = useState(false);
-  const [settingDialogueOpen, setSettingDialogueOpen] = useState(false);
+  
+  const [settingDialogueOpen, setSettingDialogueOpen] = useState(true);
+
   const [audioTrack, setAudioTrack] = useState(null);
 
   const isXStoSM = useMediaQuery(theme.breakpoints.between("xs", "sm"));
@@ -64,6 +67,14 @@ export default function JoiningPage({
 
   const webcamOn = useMemo(() => !!videoTrack, [videoTrack]);
   const micOn = useMemo(() => !!audioTrack, [audioTrack]);
+
+  const handleClickOpen = () => {
+    setSettingDialogueOpen(true);
+  };
+
+  const handleClose = () => {
+    setSettingDialogueOpen(false);
+  };
 
   const _handleTurnOffWebcam = () => {
     const videoTrack = videoTrackRef.current;
@@ -343,6 +354,25 @@ export default function JoiningPage({
                             </Typography>
                           ) : null}
                         </Box>
+                      ) : null}
+
+                      {settingDialogueOpen ? (
+                        <SettingDialogBox
+                          open={settingDialogueOpen}
+                          onClose={handleClose}
+                          popupVideoPlayerRef={popupVideoPlayerRef}
+                          popupAudioPlayerRef={popupAudioPlayerRef}
+                          changeWebcam={changeWebcam}
+                          changeMic={changeMic}
+                          setting={setting}
+                          setSetting={setSetting}
+                          webcams={webcams}
+                          mics={mics}
+                          setSelectedMic={setSelectedMic}
+                          setSelectedWebcam={setSelectedWebcam}
+                          videoTrack={videoTrack}
+                          audioTrack={audioTrack}
+                        />
                       ) : null}
 
                       <Box position="absolute" bottom={theme.spacing(2)} left="0" right="0">
