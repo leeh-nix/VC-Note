@@ -89,7 +89,7 @@ export default function Login() {
   // }, [user, loading]);
 
   return (
-    <Box sx={{ width: "31.25rem", margin: "0 auto", position: "relative" }}>
+    <Box sx={{ width: "31.25rem", margin: "0 auto", position: "relative", height: "100%" }}>
       <Box sx={{ border: "1px solid #434a4a", borderRadius: "0.9375rem", position: "absolute", width: "100%", top: "50%", transform: "translate(0, -50%)" }}>
         <Box sx={{ maxWidth: "26.5rem", margin: "0 auto" }}>
           <Typography variant="h5" sx={{ marginTop: "1.875rem" }}>

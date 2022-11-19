@@ -24,7 +24,7 @@ export default function Landing() {
   return (
     // <Box sx={{ minHeight: "100vh" }}>
     <Box>
-      <Box sx={{ padding: "0rem 1.375rem 1rem", display: "flex", alignContent: "space-between" }}>
+      <Box sx={{ padding: "0rem 1.375rem 1rem", display: "flex", alignContent: "space-between", marginTop: '2rem' }}>
         <Typography sx={{ fontSize: "2.5rem", fontFamily: "Roboto Condensed", flex: "1", color: "#fff" }} align="left">
           <MUIlink component={Link} to="/" sx={{ marginLeft: "0.3125rem", color: "#fff" }} underline="none">
             VC-Note
@@ -60,8 +60,8 @@ export default function Landing() {
             </Button>
             <Typography>or</Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <TextField id="outlined-basic" label="Enter meeting code" variant="outlined" />
-              <Button variant="text" sx={{ color: "#6F6F70" }}>
+              <TextField id="outlined-basic" label="Enter meeting code" variant="outlined" sx={{ backgroundColor: "#2e2e2e", borderRadius: "0.25rem" }} />
+              <Button variant="text" sx={{ color: "#ffffffde" }}>
                 Join
               </Button>
             </Box>
