@@ -22,8 +22,9 @@ export default function Landing() {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh" }}>
-      <Box sx={{ padding: "1.375rem 1rem", display: "flex", alignContent: "space-between" }}>
+    // <Box sx={{ minHeight: "100vh" }}>
+    <Box>
+      <Box sx={{ padding: "0rem 1.375rem 1rem", display: "flex", alignContent: "space-between" }}>
         <Typography sx={{ fontSize: "2.5rem", fontFamily: "Roboto Condensed", flex: "1", color: "#fff" }} align="left">
           <MUIlink component={Link} to="/" sx={{ marginLeft: "0.3125rem", color: "#fff" }} underline="none">
             VC-Note
