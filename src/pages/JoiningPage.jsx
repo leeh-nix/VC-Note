@@ -1,4 +1,4 @@
-import { Box, Button, Grid, styled, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Grid, IconButton, styled, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Constants } from "@videosdk.live/react-sdk";
 import useResponsiveSize from "../hooks/useResponsiveSize";
@@ -6,7 +6,9 @@ import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import VideocamIcon from "@mui/icons-material/Videocam";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import SettingDialogBox from "../components/SettingDialogBox";
+import MeetingDetailsScreen from "./MeetingDetailsScreen";
 
 const Video = styled("video")(({ theme }) => ({
   borderRadius: "10px",
@@ -54,7 +56,7 @@ export default function JoiningPage({
   const [dlgMuted, setDlgMuted] = useState(false);
   const [dlgDevices, setDlgDevices] = useState(false);
 
-  const [settingDialogueOpen, setSettingDialogueOpen] = useState(true);
+  const [settingDialogueOpen, setSettingDialogueOpen] = useState(false);
 
   const [audioTrack, setAudioTrack] = useState(null);
 
@@ -285,7 +287,6 @@ export default function JoiningPage({
           flex: 1,
           flexDirection: "column",
           height: "100vh",
-          backgroundColor: theme.palette.darkTheme.main,
           overflowY: "auto",
         }}
       >
@@ -324,6 +325,7 @@ export default function JoiningPage({
                     paddingRight: spacingHorizontalTopics - (gtThenMD ? theme.spacing(10) : theme.spacing(2)),
                     position: "relative",
                     width: "100%",
+                    textAlign: "left",
                   }}
                 >
                   <Box>
@@ -427,6 +429,51 @@ export default function JoiningPage({
                       </Box>
                     </Box>
                   </Box>
+                  {!isXSOnly && (
+                    <Button
+                      variant="text"
+                      sx={{
+                        // border: "1px solid #E5E7EB",
+                        borderRadius: "0.25rem",
+                        color: "#fff",
+                        textTransform: "none",
+                        marginTop: "0.5rem",
+                      }}
+                      onClick={() => {
+                        handleClickOpen();
+                      }}
+                      startIcon={<CheckCircleIcon />}
+                    >
+                      Check your audio and video
+                    </Button>
+                  )}
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={isXStoSM ? 5 : gtThenXL ? 6 : 5} sx={{ display: "flex", flex: 1 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flex: "1 1 0%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                <Box>
+                  <Typography variant="h4">Ready to Join?</Typography>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      color: "#fff",
+                      backgroundColor: "#5048E5",
+                      boxShadow: "0px 1px 2px rgba(31, 41, 55, 0.08)",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    Ask to Join
+                  </Button>
                 </Box>
               </Box>
             </Grid>
