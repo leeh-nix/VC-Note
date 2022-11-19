@@ -53,7 +53,7 @@ export default function JoiningPage({
   const [videoTrack, setVideoTrack] = useState(null);
   const [dlgMuted, setDlgMuted] = useState(false);
   const [dlgDevices, setDlgDevices] = useState(false);
-  
+
   const [settingDialogueOpen, setSettingDialogueOpen] = useState(true);
 
   const [audioTrack, setAudioTrack] = useState(null);
