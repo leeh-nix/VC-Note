@@ -25,7 +25,6 @@ export default function JoiningPage({
   participantName,
   setParticipantName,
   setMeetingId,
-  setToken,
   setSelectedMic,
   setSelectedWebcam,
   onClickStartMeeting,

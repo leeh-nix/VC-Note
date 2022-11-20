@@ -7,7 +7,6 @@ import Signup from "./pages/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
-  const [token, setToken] = useState("");
   const [meetingId, setMeetingId] = useState("");
   const [participantName, setParticipantName] = useState("");
   const [micOn, setMicOn] = useState(false);
@@ -25,7 +24,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Landing setMeetingId={setMeetingId}/>} />
         <Route
           path="/join"
           element={
@@ -33,7 +32,6 @@ function App() {
               participantName={participantName}
               setParticipantName={setParticipantName}
               setMeetingId={setMeetingId}
-              setToken={setToken}
               setMicOn={setMicOn}
               micEnabled={micOn}
               webcamEnabled={webcamOn}

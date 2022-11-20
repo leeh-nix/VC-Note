@@ -11,13 +11,11 @@ import FormControl from "@mui/material/FormControl";
 import { Link, useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import FilledInput from "@mui/material/FilledInput";
-import OutlinedInput from "@mui/material/OutlinedInput";
-// import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import FormHelperText from "@mui/material/FormHelperText";
 import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-// import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
-// import { ReactComponent as GoogleIcon } from "../assets/googleicon.svg";
+import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import GoogleIcon from "@mui/icons-material/Google";
 
 export default function Login() {
@@ -31,8 +29,8 @@ export default function Login() {
   const [isFormInvalid, setIsFormInvalid] = useState(true);
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPassword, setIsInvalidPassword] = useState(false);
-  // const [user, loading, error] = useAuthState(auth);
-  // const navigate = useNavigate();
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
 
   const handleChange = (prop) => (e) => {
     setValues({ ...values, [prop]: e.target.value });
@@ -72,21 +70,21 @@ export default function Login() {
   const login = (e) => {
     e.preventDefault();
     validate();
-    // if (!isFormInvalid) {
-    //   logInWithEmailAndPassword(values.email, values.password);
-    // }
+    if (!isFormInvalid) {
+      logInWithEmailAndPassword(values.email, values.password);
+    }
   };
 
-  // useEffect(() => {
-  //   if (loading) return;
-  //   if (user) {
-  //     user.getIdToken().then((res) => {
-  //       sessionStorage.setItem("Auth-Token", res);
-  //     });
-  //     console.log(user);
-  //     navigate("/");
-  //   }
-  // }, [user, loading]);
+  useEffect(() => {
+    if (loading) return;
+    if (user) {
+      user.getIdToken().then((res) => {
+        sessionStorage.setItem("Auth-Token", res);
+      });
+      console.log(user);
+      navigate("/");
+    }
+  }, [user, loading]);
 
   return (
     <Box sx={{ width: "31.25rem", margin: "0 auto", position: "relative", height: "100%" }}>
@@ -178,7 +176,7 @@ export default function Login() {
               variant="outlined"
               startIcon={<GoogleIcon />}
               fullWidth
-              // onClick={signInWithGoogle}
+              onClick={signInWithGoogle}
               sx={{ textTransform: "none", color: "#fff", border: "1px solid #E5E7EB", boxShadow: "0px 1px 2px rgba(31, 41, 55, 0.08)", height: "3rem" }}
             >
               Log in with Google

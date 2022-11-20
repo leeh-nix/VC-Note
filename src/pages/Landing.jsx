@@ -7,24 +7,27 @@ import { Link as MUIlink } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import ConferencingImage from "../assets/conferencing.png";
-// import { logout } from "../firebase";
+import { createMeeting } from "../api";
+import { logout } from "../firebase";
 
-export default function Landing() {
+export default function Landing({ setMeetingId }) {
   const sessionToken = sessionStorage.getItem("Auth-Token");
-  // console.log(sessionToken === null ? false : true)
   const [isLoggedIn, setIsLoggedIn] = useState(!sessionToken ? false : true);
 
   const handleSignOut = () => {
     console.log("Sign Out");
-    // sessionStorage.removeItem("Auth-Token");
-    // setIsLoggedIn(false);
-    // logout();
+    sessionStorage.removeItem("Auth-Token");
+    setIsLoggedIn(false);
+    logout();
+  };
+
+  const handleCreateMeeting = async () => {
+    console.log("Something");
   };
 
   return (
-    // <Box sx={{ minHeight: "100vh" }}>
     <Box>
-      <Box sx={{ padding: "0rem 1.375rem 1rem", display: "flex", alignContent: "space-between", marginTop: '2rem' }}>
+      <Box sx={{ padding: "0rem 1.375rem 1rem", display: "flex", alignContent: "space-between", marginTop: "2rem" }}>
         <Typography sx={{ fontSize: "2.5rem", fontFamily: "Roboto Condensed", flex: "1", color: "#fff" }} align="left">
           <MUIlink component={Link} to="/" sx={{ marginLeft: "0.3125rem", color: "#fff" }} underline="none">
             VC-Note
@@ -55,7 +58,7 @@ export default function Landing() {
             VC-Note is the most and enjoyable way to connect via video call with your families and business organisations across the world
           </Typography>
           <Box sx={{ display: "flex", gap: "1.5rem", alignItems: "center", marginTop: "32px" }}>
-            <Button variant="contained" sx={{ fontSize: "1.25rem", textTransform: "none", height: "3.75rem" }}>
+            <Button variant="contained" sx={{ fontSize: "1.25rem", textTransform: "none", height: "3.75rem" }} onClick={handleCreateMeeting}>
               Start a meeting
             </Button>
             <Typography>or</Typography>
@@ -66,13 +69,17 @@ export default function Landing() {
               </Button>
             </Box>
           </Box>
-          <Divider sx={{ marginTop: "2.25rem" }} />
-          <Typography variant="body1" sx={{ fontSize: "1rem", color: "#fff", marginTop: "1.5rem" }}>
-            Don't have an account?
-            <MUIlink component={Link} to="/signup" sx={{ marginLeft: "0.3125rem" }} underline="hover">
-              Get Started Now
-            </MUIlink>
-          </Typography>
+          {!isLoggedIn && (
+            <>
+              <Divider sx={{ marginTop: "2.25rem" }} />
+              <Typography variant="body1" sx={{ fontSize: "1rem", color: "#fff", marginTop: "1.5rem" }}>
+                Don't have an account?
+                <MUIlink component={Link} to="/signup" sx={{ marginLeft: "0.3125rem" }} underline="hover">
+                  Get Started Now
+                </MUIlink>
+              </Typography>
+            </>
+          )}
         </Box>
         <Box sx={{ width: "40%" }}>
           <img src={ConferencingImage} alt="Conferencing" style={{ backgroundSize: "contain", width: "100%" }} />

@@ -14,12 +14,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-// import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import GoogleIcon from "@mui/icons-material/Google";
-// import { auth, registerWithEmailAndPassword, signInWithGoogle } from "../firebase";
+import getIpAddress from "../ip";
+import { auth, registerWithEmailAndPassword, signInWithGoogle } from "../firebase";
 
 export default function Signup() {
   const [values, setValues] = useState({
@@ -35,7 +35,7 @@ export default function Signup() {
   const [isInvalidEmail, setIsInvalidEmail] = useState(false);
   const [isInvalidPassword, setIsInvalidPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
-  //   const [user, loading, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
   const handleChange = (prop) => (e) => {
@@ -77,26 +77,30 @@ export default function Signup() {
     }
   };
 
-  const register = (e) => {
+  const register = async (e) => {
     e.preventDefault();
     validate();
     if (!isFormInvalid) {
-      console.log("here");
-      //   let res = registerWithEmailAndPassword(values.name, values.email, values.password);
-      //   console.log(res);
+      const ip = await getIpAddress();
+      let res = registerWithEmailAndPassword(values.name, values.email, values.password, ip);
     }
   };
 
-  //   useEffect(() => {
-  //     if (loading) return;
-  //     if (user) {
-  //       user.getIdToken().then((res) => {
-  //         sessionStorage.setItem("Auth-Token", res);
-  //       });
-  //       console.log(user);
-  //       navigate("/");
-  //     }
-  //   }, [user, loading]);
+  const handleSignupWithGoogle = async () => {
+    const ip = await getIpAddress();
+    await signInWithGoogle(ip);
+  };
+
+  useEffect(() => {
+    if (loading) return;
+    if (user) {
+      user.getIdToken().then((res) => {
+        sessionStorage.setItem("Auth-Token", res);
+      });
+      console.log(user);
+      navigate("/");
+    }
+  }, [user, loading]);
 
   return (
     <Box sx={{ width: "31.25rem", margin: "0 auto", position: "relative", height: "100%" }}>
@@ -109,7 +113,7 @@ export default function Signup() {
             variant="outlined"
             startIcon={<GoogleIcon />}
             fullWidth
-            // onClick={signInWithGoogle}
+            onClick={handleSignupWithGoogle}
             sx={{ textTransform: "none", color: "#fff", border: "1px solid #E5E7EB", boxShadow: "0px 1px 2px rgba(31, 41, 55, 0.08)", marginTop: "1.5rem", height: "3rem" }}
           >
             Sign up with Google
