@@ -8,7 +8,6 @@ import VideocamOffIcon from "@mui/icons-material/VideocamOff";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import SettingDialogBox from "../components/SettingDialogBox";
-import MeetingDetailsScreen from "./MeetingDetailsScreen";
 
 const Video = styled("video")(({ theme }) => ({
   borderRadius: "10px",
