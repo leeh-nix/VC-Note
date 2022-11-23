@@ -21,7 +21,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import getIpAddress from "../ip";
 import { auth, registerWithEmailAndPassword, signInWithGoogle } from "../firebase";
 
-export default function Signup() {
+export default function Signup({ setParticipantName }) {
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -97,7 +97,7 @@ export default function Signup() {
       user.getIdToken().then((res) => {
         sessionStorage.setItem("Auth-Token", res);
       });
-      console.log(user);
+      setParticipantName(user.displayName);
       navigate("/");
     }
   }, [user, loading]);

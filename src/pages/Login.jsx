@@ -18,7 +18,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import GoogleIcon from "@mui/icons-material/Google";
 
-export default function Login() {
+export default function Login({ setParticipantName }) {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -81,7 +81,7 @@ export default function Login() {
       user.getIdToken().then((res) => {
         sessionStorage.setItem("Auth-Token", res);
       });
-      console.log(user);
+      setParticipantName(user.displayName)
       navigate("/");
     }
   }, [user, loading]);

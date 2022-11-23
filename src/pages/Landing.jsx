@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { Link as MUIlink } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import ConferencingImage from "../assets/conferencing.png";
-import { createMeeting } from "../api";
+import { createMeeting, validateMeeting } from "../api";
 import { logout } from "../firebase";
+import { useSnackbar } from "notistack";
 
 export default function Landing({ setMeetingId }) {
   const sessionToken = sessionStorage.getItem("Auth-Token");
+  const [meetingCode, setMeetingCode] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(!sessionToken ? false : true);
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     console.log("Sign Out");
@@ -21,8 +25,29 @@ export default function Landing({ setMeetingId }) {
     logout();
   };
 
+  const handleJoinMeeting = async () => {
+    if (isLoggedIn) {
+      const valid = await validateMeeting({
+        roomId: meetingCode,
+      });
+      if (valid) {
+        setMeetingId(meetingCode);
+        navigate(`/meeting/${meetingCode}`);
+      } else {
+        enqueueSnackbar("Couldn't find the meeting with that code.", { variant: "error", autoHideDuration: "3000", preventDuplicate: "true" });
+      }
+    }
+    enqueueSnackbar("Please login before starting a meeting", { variant: "error", autoHideDuration: "3000", preventDuplicate: "true" });
+  };
+
   const handleCreateMeeting = async () => {
-    console.log("Something");
+    if (isLoggedIn) {
+      const _meetingId = await createMeeting();
+      setMeetingId(_meetingId);
+      navigate(`/meeting/${_meetingId}`);
+      return;
+    }
+    enqueueSnackbar("Please login before starting a meeting", { variant: "error", autoHideDuration: "3000", preventDuplicate: "true" });
   };
 
   return (
@@ -46,7 +71,7 @@ export default function Landing({ setMeetingId }) {
             </Button>
           )}
 
-          <Button variant="contained" sx={{ fontSize: "1.25rem", textTransform: "none" }}>
+          <Button variant="contained" sx={{ fontSize: "1.25rem", textTransform: "none" }} onClick={handleCreateMeeting}>
             Start a meeting
           </Button>
         </Box>
@@ -63,10 +88,23 @@ export default function Landing({ setMeetingId }) {
             </Button>
             <Typography>or</Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <TextField id="outlined-basic" label="Enter meeting code" variant="outlined" sx={{ backgroundColor: "#2e2e2e", borderRadius: "0.25rem" }} />
-              <Button variant="text" sx={{ color: "#ffffffde" }}>
+              <TextField
+                id="outlined-basic"
+                label="Enter meeting code"
+                variant="outlined"
+                sx={{ backgroundColor: "#2e2e2e", borderRadius: "0.25rem" }}
+                onChange={(e) => {
+                  setMeetingCode(e.target.value);
+                }}
+              />
+              {meetingCode.length > 3 && (
+                <Button variant="text" sx={{ color: "#ffffffde" }} onClick={handleJoinMeeting}>
+                  Join
+                </Button>
+              )}
+              {/* <Button variant="text" sx={{ color: "#ffffffde" }} onClick={handleJoinMeeting}>
                 Join
-              </Button>
+              </Button> */}
             </Box>
           </Box>
           {!isLoggedIn && (

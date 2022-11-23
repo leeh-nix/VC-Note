@@ -14,7 +14,7 @@ export const createMeeting = async () => {
   };
   const { roomId } = await fetch(url, options)
     .then((res) => res.json())
-    .catch((err) => console.log("error", err));
+    .catch((err) => console.log(err));
   return roomId;
 };
 
@@ -29,7 +29,6 @@ export const validateMeeting = async ({ roomId }) => {
   };
   const result = await fetch(url, options)
     .then((res) => res.json())
-    .catch((err) => console.error("error", err));
-
+    .catch((err) => console.log(err));
   return result ? result.roomId === roomId : false;
 };
