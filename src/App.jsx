@@ -5,13 +5,17 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Meeting from "./meeting/Meeting";
+import MeetingWrapper from "./meeting/MeetingWrapper";
 import NotFound from "./pages/NotFound";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function App() {
   const [meetingId, setMeetingId] = useState("");
+  const [isloggedIn, setIsloggedIn] = useState(false);
+  const [isHost, setIsHost] = useState(false);
+  const [hostID, setHostID] = useState(null);
   const [participantName, setParticipantName] = useState("");
-  const [micOn, setMicOn] = useState(true);
+  const [micOn, setMicOn] = useState(false);
   const [webcamOn, setWebcamOn] = useState(true);
   const [selectedMic, setSelectedMic] = useState({ id: null });
   const [selectedWebcam, setSelectedWebcam] = useState({ id: null });
@@ -65,20 +69,37 @@ function App() {
     }, []);
   };
 
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setIsloggedIn(true);
+      setParticipantName(user.displayName);
+    }
+  });
+
   return (
     <Router>
       <Routes>
         <Route
           path="/meeting/:slug"
           element={
-            <Meeting
-              meetingId={meetingId}
+            <MeetingWrapper
+              isHost={isHost}
+              participantName={participantName}
+              setParticipantName={setParticipantName}
               setMeetingId={setMeetingId}
+              setMicOn={setMicOn}
               micEnabled={micOn}
               webcamEnabled={webcamOn}
-              participantName={participantName}
-              setMeetingStarted={setMeetingStarted}
+              setSelectedMic={setSelectedMic}
+              setSelectedWebcam={setSelectedWebcam}
+              setWebcamOn={setWebcamOn}
+              isMeetingStarted={isMeetingStarted}
               setIsMeetingLeft={setIsMeetingLeft}
+              isMeetingLeft={isMeetingLeft}
+              isloggedIn={isloggedIn}
+              meetingId={meetingId}
+              setMeetingStarted={setMeetingStarted}
               selectedMic={selectedMic}
               selectedWebcam={selectedWebcam}
               selectWebcamDeviceId={selectWebcamDeviceId}
@@ -91,7 +112,7 @@ function App() {
           }
         />
         <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<Landing setMeetingId={setMeetingId} />} />
+        <Route path="/" element={<Landing setMeetingId={setMeetingId} isloggedIn={isloggedIn} setIsloggedIn={setIsloggedIn} setIsHost={setIsHost} />} />
         <Route
           path="/join"
           element={

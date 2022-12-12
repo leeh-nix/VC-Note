@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { MeetingProvider } from "@videosdk.live/react-sdk";
 import config from "../config";
 import MeetingContainer from "./MeetingContainer";
-import { useNavigate, useParams } from "react-router-dom";
-import { validateMeeting } from "../api";
+import { useNavigate } from "react-router-dom";
 
 export default function Meeting({
   meetingId,
   setMeetingId,
   micEnabled,
+  setMicOn,
+  setWebcamOn,
   webcamEnabled,
   participantName,
   setMeetingStarted,
@@ -23,30 +24,11 @@ export default function Meeting({
   useRaisedHandParticipants,
   raisedHandsParticipants,
 }) {
-  const { slug } = useParams();
-  const _meetingId = meetingId !== "" ? meetingId : slug;
   const navigate = useNavigate();
-
-  useEffect(() => {
-    async function checkMeetingId() {
-      const valid = await validateMeeting({
-        roomId: _meetingId,
-      });
-      if (valid) {
-        setMeetingId(_meetingId);
-        setMeetingStarted(true);
-      } else {
-        console.log(_meetingId);
-        navigate("/404");
-      }
-    }
-    checkMeetingId();
-  }, []);
-
   return (
     <MeetingProvider
       config={{
-        meetingId: _meetingId,
+        meetingId: meetingId,
         multiStream: false,
         micEnabled: micEnabled,
         webcamEnabled: webcamEnabled,
@@ -58,10 +40,16 @@ export default function Meeting({
     >
       <MeetingContainer
         onMeetingLeave={() => {
-          alert("Meeting Left");
+          setMeetingId("");
+          setWebcamOn(false);
+          setMicOn(false);
+          window.close()
+          // navigate("/");
         }}
         setIsMeetingLeft={setIsMeetingLeft}
         selectedMic={selectedMic}
+        setMicOn={setMicOn}
+        setWebcamOn={setWebcamOn}
         selectedWebcam={selectedWebcam}
         selectWebcamDeviceId={selectWebcamDeviceId}
         setSelectWebcamDeviceId={setSelectWebcamDeviceId}

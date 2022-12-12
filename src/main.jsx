@@ -9,7 +9,7 @@ import { SnackbarProvider } from "notistack";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <React.StrictMode>
+  <>
     <ThemeProvider theme={generateMuiTheme()}>
       <SnackbarProvider
         anchorOrigin={{
@@ -22,6 +22,6 @@ root.render(
         <App />
       </SnackbarProvider>
     </ThemeProvider>
-  </React.StrictMode>,
+  </>,
   document.getElementById("root")
 );

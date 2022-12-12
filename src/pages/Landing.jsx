@@ -11,22 +11,19 @@ import { createMeeting, validateMeeting } from "../api";
 import { logout } from "../firebase";
 import { useSnackbar } from "notistack";
 
-export default function Landing({ setMeetingId }) {
-  const sessionToken = sessionStorage.getItem("Auth-Token");
+export default function Landing({ setMeetingId, isloggedIn, setIsloggedIn, setIsHost, setHostID }) {
   const [meetingCode, setMeetingCode] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(!sessionToken ? false : true);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
     console.log("Sign Out");
-    sessionStorage.removeItem("Auth-Token");
-    setIsLoggedIn(false);
+    setIsloggedIn(false);
     logout();
   };
 
   const handleJoinMeeting = async () => {
-    if (isLoggedIn) {
+    if (isloggedIn) {
       const valid = await validateMeeting({
         roomId: meetingCode,
       });
@@ -34,16 +31,17 @@ export default function Landing({ setMeetingId }) {
         setMeetingId(meetingCode);
         navigate(`/meeting/${meetingCode}`);
       } else {
-        enqueueSnackbar("Couldn't find the meeting with that code.", { variant: "error", autoHideDuration: "3000", preventDuplicate: "true" });
+        enqueueSnackbar("Couldn't find a meeting with that code.", { variant: "error", autoHideDuration: "3000", preventDuplicate: "true" });
       }
     }
     enqueueSnackbar("Please login before starting a meeting", { variant: "error", autoHideDuration: "3000", preventDuplicate: "true" });
   };
 
   const handleCreateMeeting = async () => {
-    if (isLoggedIn) {
+    if (isloggedIn) {
       const _meetingId = await createMeeting();
       setMeetingId(_meetingId);
+      setIsHost(true);
       navigate(`/meeting/${_meetingId}`);
       return;
     }
@@ -59,7 +57,7 @@ export default function Landing({ setMeetingId }) {
           </MUIlink>
         </Typography>
         <Box sx={{ display: "flex", gap: "3rem" }}>
-          {!isLoggedIn ? (
+          {!isloggedIn ? (
             <Button sx={{ fontSize: "1.25rem", textTransform: "none" }}>
               <MUIlink component={Link} to="/login" sx={{ marginLeft: "0.3125rem", color: "#fff" }} underline="none">
                 Log In
@@ -107,7 +105,7 @@ export default function Landing({ setMeetingId }) {
               </Button> */}
             </Box>
           </Box>
-          {!isLoggedIn && (
+          {!isloggedIn && (
             <>
               <Divider sx={{ marginTop: "2.25rem" }} />
               <Typography variant="body1" sx={{ fontSize: "1rem", color: "#fff", marginTop: "1.5rem" }}>

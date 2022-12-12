@@ -1,5 +1,4 @@
 import config from "./config";
-
 const VIDEOSDK_TOKEN = config.API_KEY;
 const BASE_URL = "https://api.videosdk.live";
 

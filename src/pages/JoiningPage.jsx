@@ -20,22 +20,7 @@ const Video = styled("video")(({ theme }) => ({
   justifyContent: "center",
 }));
 
-export default function JoiningPage({
-  participantName,
-  setParticipantName,
-  setMeetingId,
-  setSelectedMic,
-  setSelectedWebcam,
-  onClickStartMeeting,
-  micEnabled,
-  webcamEnabled,
-  setWebcamOn,
-  setMicOn,
-  meetingType,
-  setMeetingType,
-  setMeetingMode,
-  meetingMode,
-}) {
+export default function JoiningPage({ isloggedIn, setSelectedMic, setSelectedWebcam, micEnabled, webcamEnabled, setWebcamOn, setMicOn, meetingMode, setMeetingReady }) {
   const theme = useTheme();
   const videoPlayerRef = useRef();
   const popupVideoPlayerRef = useRef();
@@ -52,7 +37,6 @@ export default function JoiningPage({
   });
   const [videoTrack, setVideoTrack] = useState(null);
   const [dlgMuted, setDlgMuted] = useState(false);
-  const [dlgDevices, setDlgDevices] = useState(false);
 
   const [settingDialogueOpen, setSettingDialogueOpen] = useState(false);
 
@@ -277,6 +261,13 @@ export default function JoiningPage({
     getDevices({ micEnabled, webcamEnabled });
   }, []);
 
+  const handleReadyToJoinClick = () => {
+    if (!isloggedIn) {
+      return;
+    }
+    setMeetingReady(true);
+  };
+
   return (
     <>
       <Box
@@ -469,6 +460,7 @@ export default function JoiningPage({
                       boxShadow: "0px 1px 2px rgba(31, 41, 55, 0.08)",
                       marginTop: "1rem",
                     }}
+                    onClick={handleReadyToJoinClick}
                   >
                     Ask to Join
                   </Button>

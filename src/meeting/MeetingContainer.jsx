@@ -5,18 +5,15 @@ import React, { createRef, useRef, useState, useEffect } from "react";
 import { ParticipantsView } from "../components/ParticipantView";
 import useResponsiveSize from "../hooks/useResponsiveSize";
 import PresenterView from "../components/PresenterView";
+import Controls from "../components/Controls";
 
 export default function MeetingContainer({
   onMeetingLeave,
   setIsMeetingLeft,
   selectedMic,
   selectedWebcam,
-  selectWebcamDeviceId,
-  setSelectWebcamDeviceId,
-  selectMicDeviceId,
-  setSelectMicDeviceId,
-  useRaisedHandParticipants,
-  raisedHandsParticipants,
+  setMicOn,
+  setWebcamOn,
   micEnabled,
   webcamEnabled,
 }) {
@@ -167,19 +164,28 @@ export default function MeetingContainer({
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
-                flex: "1 1 0%",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
               <Box
                 sx={{
                   display: "flex",
+                  flexDirection: "row",
                   flex: "1 1 0%",
                 }}
               >
-                {isPresenting ? <PresenterView height={containerHeight - bottomBarHeight} /> : null}
-                {isPresenting && isMobile ? null : <ParticipantsView isPresenting={isPresenting} />}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flex: "1 1 0%",
+                  }}
+                >
+                  {isPresenting ? <PresenterView height={containerHeight - bottomBarHeight} /> : null}
+                  {isPresenting && isMobile ? null : <ParticipantsView isPresenting={isPresenting} />}
+                </Box>
               </Box>
+              <Controls onMeetingLeave={onMeetingLeave} />
             </Box>
           </>
         ) : (
